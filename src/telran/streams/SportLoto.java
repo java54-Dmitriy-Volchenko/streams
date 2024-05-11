@@ -14,16 +14,18 @@ public class SportLoto {
 			LotoArgs lotoArgs = getLotoArgs(args);			
 			printSportLoto(lotoArgs);
 			
-		} catch (RuntimeException e) {o} catch (Exception e) {
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
 	private static void printSportLoto(LotoArgs lotoArgs) {
-		System.out.printf ("********* SportLOTO %d from %d! *********\n", lotoArgs.amount(), lotoArgs.maximal());		
+		System.out.printf ("**** SportLOTO %d digits from %d to %d!****\n", lotoArgs.amount(),  lotoArgs.minimal(), lotoArgs.maximal());		
 		System.out.printf ("\nAnd the result is: ");	
 		
-		new Random().ints(lotoArgs.minimal(), lotoArgs.maximal()).distinct().limit(lotoArgs.amount()).forEach(i -> System.out.printf("\u001B[33m%d \u001B[0m", i));
+		new Random().ints(lotoArgs.minimal(), lotoArgs.maximal()+1).distinct().limit(lotoArgs.amount()).forEach(i -> System.out.printf("\u001B[33m%d \u001B[0m", i));
 		
 		System.out.println("\nWe are shure,that You are the winner!\n ");
 		System.out.println("*********** END OF THE GAME! ***********");
@@ -44,16 +46,17 @@ public class SportLoto {
 		if(args[2] == null || args.length <3) {
 			throw new Exception("Input amount value!");
 		}
-		int amount = getAmountValue(args[2], args[0]);
+		int amount = getAmountValue(args[2], args[0], args[1]);
 		return amount;
 	}
 
-	private static int getAmountValue(String amountString, String minString)throws Exception {
+	private static int getAmountValue(String amountString, String minString,String maxString )throws Exception {
 		try {
 			int result = Integer.parseInt(amountString);
 			int min = getMinimalValue(minString);
-			if (result <=min ) {
-				throw new Exception("value argument can't be less then minimal argument!");
+			int max = getMaximalValue(maxString, minString);
+			if (result <1 || result >((max-min)+1) ) {
+				throw new Exception("Value argument can't be less then 1 and more then diapason between minimal and maximal arguments inclusively!");
 			}
 		return result;
 		}
@@ -67,20 +70,20 @@ public class SportLoto {
 		if(args[1] == null || args.length <2) {
 			throw new Exception("Input maximal value!");
 		}
-		int maximal = getMaximalValue(args[1],args[0], args[2]);
+		int maximal = getMaximalValue(args[1],args[0]);
 		
 		return maximal;
 			
 		
 	}
 
-	private static int getMaximalValue(String maxString, String minString, String amountString) throws Exception {
+	private static int getMaximalValue(String maxString, String minString) throws Exception {
 		try {
 			int result = Integer.parseInt(maxString);	
 			int min = getMinimalValue(minString);
-			int amnt = getAmountValue(amountString, minString);
-			if (result <(min+amnt)) {
-				throw new Exception("maximal argument can't be less then minimal argument plus amount!");
+			
+			if (result < min) {
+				throw new Exception("maximal argument can't be less then minimal!");
 			}
 		return result;
 		}
@@ -112,19 +115,6 @@ public class SportLoto {
 	
 	}
 
-//	private static int compare(int minimal, int maximal, int amount) {
-//
-//		return (int) (minimal+amount)-maximal;
-//
-//	}
-		// TODO Auto-generated method stub
-		//printing out sportloto random numbers
-		//application with command line mandatory arguments
-		//first argument minimal inclusive value
-		//second argument maximal inclusive value
-		//third argument amount of the random numbers
-		//Example: java -jar sportLoto 1 49 7
-		// 3, 10, 49, 1, 40, 6, 7
 	}
 
 
