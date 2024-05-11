@@ -3,10 +3,15 @@ package telran.streams.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+
+import telran.streams.StreamIntroductionMethods;
+
 import static telran.streams.StreamIntroductionMethods.*;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
+
 class StreamsIntroductionTests {
 
 	@Test
@@ -53,5 +58,12 @@ class StreamsIntroductionTests {
 		displayShuffle(ar);
 	}
 
-	
+	@Test
+	void getMinMaxAvg() {		
+		int [] ar= {1, 10, 1, 1, 2, -17, 32, -44};				
+		MinMaxAvg result = StreamIntroductionMethods.getMinMaxAvg(ar);
+		assertEquals(-44, result.min());
+		assertEquals(32, result.max());
+		assertEquals(6.0, result.avg());
+	}
 }

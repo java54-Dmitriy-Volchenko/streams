@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+
+
 public class StreamIntroductionMethods {
 static public int sumIf(int ar[], Predicate<Integer> predicate) {
 	return Arrays.stream(ar).filter(n -> predicate.test(n)).sum();
@@ -36,5 +38,15 @@ static public int[] getRandomArray(int fromInclusive, int toExclusive, int nNumb
 static public void displayShuffle(int ar[]) {
     Arrays.stream(new Random().ints(0, ar.length).distinct().limit(ar.length).toArray()).forEach(i -> System.out.printf("%d ", ar[i]));
 	
+}
+public record MinMaxAvg(int min, int max, double avg){
+	
+}
+static public  MinMaxAvg getMinMaxAvg(int [] ar){
+	
+	int min=Arrays.stream(ar).reduce(Integer.MAX_VALUE, (acc, elem) -> Math.min(acc, elem));
+	int max = Arrays.stream(ar).reduce(Integer.MIN_VALUE, (acc, elem) -> Math.max(acc, elem)); 
+	double avg = Math.abs((min+max)/2.0);	
+	return new MinMaxAvg(min, max, avg);
 }
 }
