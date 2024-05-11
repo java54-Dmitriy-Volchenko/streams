@@ -22,13 +22,13 @@ public class SportLoto {
 	}
 
 	private static void printSportLoto(LotoArgs lotoArgs) {
-		System.out.printf ("**** SportLOTO %d digits from %d to %d!****\n", lotoArgs.amount(),  lotoArgs.minimal(), lotoArgs.maximal());		
+		System.out.printf ("***** SportLOTO %d digits from %d to %d!*****\n", lotoArgs.amount(),  lotoArgs.minimal(), lotoArgs.maximal());		
 		System.out.printf ("\nAnd the result is: ");	
 		
 		new Random().ints(lotoArgs.minimal(), lotoArgs.maximal()+1).distinct().limit(lotoArgs.amount()).forEach(i -> System.out.printf("\u001B[33m%d \u001B[0m", i));
 		
 		System.out.println("\nWe are shure,that You are the winner!\n ");
-		System.out.println("*********** END OF THE GAME! ***********");
+		System.out.println("************ END OF THE GAME! ************");
 	
 	}
 		
