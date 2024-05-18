@@ -14,22 +14,40 @@ class ColledgeTests {
 private static final String NAME1 = "Vasya";
 private static final String NAME2 = "Petya";
 private static final String NAME3 = "Masha";
+private static final String NAME4 = "Dora";
+private static final String NAME5 = "Riva";
 private static final int HOURS1 = 100;
 private static final int HOURS2 = 100;
 private static final int HOURS3 = 150;
-private static final int[] MARKS1 = {60, 70, 80};
-private static final int[] MARKS2 = {60, 60, 60};
+private static final int HOURS4 = 130;
+
+private static final int[] MARKS1 = {60, 70, 80};//70
+private static final int[] MARKS2 = {60, 60, 60};//60
+private static final int[] MARKS4 = {60, 90, 100};//83.33
+
 Student st1 = new Student(NAME1, HOURS1, MARKS1);
 Student st2 = new Student(NAME2, HOURS2, MARKS2);
 Student st3 = new Student(NAME3, HOURS3, MARKS2);
-Colledge colledge = new Colledge(new Student[] {st1, st2, st3});
+Student st4 = new Student(NAME4, HOURS4, MARKS4);
+Student st5 = new Student(NAME5, HOURS4, MARKS1);
+
+Colledge colledge = new Colledge(new Student[] {st1, st2, st3, st4, st5});
 
 
 
 
 	@Test
 	void sortTest() {
-		Student[] expected = {st1, st3, st2};
+		Student[] expected = {
+				st4, //Dora, 130, 83.33
+				st5,  //Riva, 130, 70				
+				st1, //Vasya, 100, 70
+				st3, //Masha, 150, 60
+				st2 //Petya, 100, 60
+				
+				
+			
+				};
 		assertArrayEquals(expected, sortStudents(colledge));
 	}
 	@Test
