@@ -25,7 +25,9 @@ Student st3 = new Student(NAME3, HOURS3, MARKS2);
 Colledge colledge = new Colledge(new Student[] {st1, st2, st3});
 
 
-
+private static Stream<Student> studentStream(Colledge col) {
+    return StreamSupport.stream(col.spliterator(), false);
+}
 
 	@Test
 	void sortTest() {
@@ -45,15 +47,11 @@ Colledge colledge = new Colledge(new Student[] {st1, st2, st3});
 		assertEquals(60, iss.getMin());
 		assertEquals(80, iss.getMax());
 	}
-	private static IntSummaryStatistics getMarksStatistics(Colledge coll) {
-		// TODO Auto-generated method stub
-		//returns summary statistics for marks of all colledge's students
-		return null;
+	private static IntSummaryStatistics getMarksStatistics(Colledge coll) {		
+		return  studentStream(coll).flatMapToInt(student -> Arrays.stream(student.marks())).summaryStatistics();
 	}
 	static private IntSummaryStatistics getHoursStatistics(Colledge col) {
-		// TODO Auto-generated method stub
-		//returns IntSummaryStatistics of hours for all colledge's students
-		return null;
+		return  studentStream(col).mapToInt(student -> student.hours()).summaryStatistics();
 	}
 	private static Student[] sortStudents(Colledge col) {	
 	
@@ -61,19 +59,8 @@ Colledge colledge = new Colledge(new Student[] {st1, st2, st3});
 		            .sorted(Comparator.comparingDouble((Student student) ->
 		                    Arrays.stream(student.marks()).average().orElse(0))
 		                    .thenComparing(Comparator.comparingInt(Student::hours)).reversed())
-		            .toArray(Student[]::new);
-	   
-	   		// TODO
-			//consider getting stream from Iterable
-			//returns array of students sorted in descending order of the average marks
-			//in the case average marks are equaled there will be compared hours
-			//one code line
+		            .toArray(Student[]::new); 	   	
 	   
 		    }
-
-	  private static Stream<Student> studentStream(Colledge col) {
-		        return StreamSupport.stream(col.spliterator(), false);
-		    }
-	
 
 }
